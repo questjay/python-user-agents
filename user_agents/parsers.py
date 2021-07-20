@@ -181,7 +181,35 @@ class UserAgent(object):
 
     def get_browser(self):
         return ("%s %s" % (self.browser.family, self.browser.version_string)).strip()
-
+    
+    def au_ft(self):
+        oldso = str(self.ua_string)
+        index = 0
+        newso = oldso
+        index = oldso.index('(')
+        hj = (oldso[index:]).replace('(','')
+        old = hj
+        ol = 0
+        slist = list(old)
+        for i, c in enumerate(slist):
+          if slist[i] == ';': 
+             ol = i
+        s = ''.join(slist)
+        new = str(old[:ol+1])
+        return new
+    
+    @property
+    def get_oscpu(self):
+        #this is a javascript OS CPU function open inspect(Q) and
+        #type "navigator.oscpu" on console to get OS CPU Navigator
+        #https://developer.mozilla.org/en-US/docs/Web/API/Navigator/oscpu
+        try:
+         first = self.au_ft()
+         sec = first
+         return sec
+        except Exception as e:
+         return None
+    
     @property
     def is_tablet(self):
         if self.device.family in TABLET_DEVICE_FAMILIES:
